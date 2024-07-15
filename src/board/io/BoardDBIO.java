@@ -44,8 +44,20 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
   }
 
   @Override
-  public ArrayList<Board> selectBoard(int bno) {
-    return null;
+  public Board selectBoard(int bno) {
+    String query = "select * from boards where no =" + bno;
+    ResultSet rs = null;
+    rs = super.execute(query, rs);
+    Board board = null;
+    try {
+      if (rs.next()) {
+        board = new Board(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+            rs.getDate(5));
+      }
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+    }
+    return board;
   }
 
   @Override

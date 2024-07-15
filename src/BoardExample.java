@@ -57,6 +57,10 @@ public class BoardExample extends BoardDBIO {
         case 2:
           //bno과 일치하는 ResultSet 한 줄 만 출력
           int bno = boardMenu.readMenu();
+          selectOneBoard(bno);
+          int subMenu = boardMenu.subMenu();
+          if (subMenu == 1)
+
           break;
         case 3:
           System.out.println("[게시물 전체 삭제]");
@@ -69,6 +73,18 @@ public class BoardExample extends BoardDBIO {
   }
 
   private void selectOneBoard(int bno){
+    Board board = super.selectBoard(bno);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+    System.out.println("##############");
+    System.out.println("번호 : " + board.getBno());
+    System.out.println("제목 : "+board.getBtitle());
+    System.out.println("내용 : "+board.getBcontent());
+    System.out.println("작성자 : "+ board.getBwriter());
+    System.out.println("날짜 : "+board.getBdate());
+    System.out.println("##############");
 
+    //////////
+    System.out.println("date format 없이 출력하면~ ");
+    System.out.println(board.getBdate());
   }
 }

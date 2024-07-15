@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
-import java.util.Scanner;
 
 public class BoardMenu {
   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,6 +24,9 @@ public class BoardMenu {
     try {
       String input = br.readLine();
       menu = Integer.parseInt(input.trim());
+      if (menu < 1 || menu > 4){
+        throw new IOException("1, 2, 3, 4 숫자만 입력해주세요.");
+      }
     } catch (IOException | NumberFormatException e) {
       System.err.println(e.getMessage());
     }
@@ -63,6 +65,10 @@ public class BoardMenu {
     try {
       String input = br.readLine();
       menu = Integer.parseInt(input.trim());
+
+      if (menu < 1 || menu > 3) {
+        throw new IOException("1, 2, 3 숫자만 입력해주세요.");
+      }
     } catch (IOException | NumberFormatException e) {
       System.err.println(e.getMessage());
     }
@@ -78,6 +84,9 @@ public class BoardMenu {
     try {
       String input = br.readLine();
       menu = Integer.parseInt(input.trim());
+      if (menu != 1 && menu != 2) {
+        throw new IOException("1, 2 숫자만 입력해주세요.");
+      }
     } catch (IOException | NumberFormatException e) {
       System.err.println(e.getMessage());
     }

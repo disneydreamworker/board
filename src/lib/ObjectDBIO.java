@@ -72,6 +72,7 @@ public abstract class ObjectDBIO {
       rs = obj.executeQuery(query);
     } catch (SQLException e) {
       System.err.println(e.getMessage());
+      System.out.println("존재하지 않는 게시물입니다.");
     }
     return rs;
   }
@@ -83,9 +84,6 @@ public abstract class ObjectDBIO {
       open();
       psmt = connection.prepareStatement(query);
       result = psmt.execute();
-//      if (!result) {
-//        System.out.println("게시글 등록이 실패했습니다.");
-//      }
       return result;
     } catch (SQLException e) {
       System.err.println(e.getMessage());
