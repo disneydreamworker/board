@@ -39,8 +39,14 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
   }
 
   @Override
-  public boolean updateBoard() {
-    return false;
+  public boolean updateBoard(Board board) {
+    String title = board.getBtitle();
+    String content = board.getBcontent();
+    String writer = board.getBwriter();
+    Date date = board.getBdate();
+    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+    String query = "UPDATE boards SET title = '" + title + "', content = '" + content + "', writer = '" + writer + "', date = '" + sqlDate + "' WHERE no = " + board.getBno();
+    return super.execute(query);
   }
 
   @Override

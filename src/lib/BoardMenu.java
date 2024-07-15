@@ -106,4 +106,21 @@ public class BoardMenu {
     }
     return menu;
   }
+
+  public Board updateBoard(Board board){
+    System.out.println("[수정 내용 입력]");
+    System.out.print("제목 : ");
+    try {
+      board.setBtitle(br.readLine());
+      System.out.println("내용 : ");
+      board.setBcontent(br.readLine());
+      System.out.println("작성자 : ");
+      board.setBwriter(br.readLine());
+      board.setBdate(new Date());
+      System.out.println("---------------------------------------------------");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return board;
+  }
 }
