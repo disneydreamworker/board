@@ -83,7 +83,8 @@ public abstract class ObjectDBIO {
     try {
       open();
       psmt = connection.prepareStatement(query);
-      result = psmt.execute();
+      psmt.execute();
+      result = true;
       return result;
     } catch (SQLException e) {
       System.err.println(e.getMessage());

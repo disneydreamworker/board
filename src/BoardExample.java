@@ -32,6 +32,19 @@ public class BoardExample extends BoardDBIO {
     }
   }
 
+  private Board selectOneBoard(int bno){
+    Board board = super.selectBoard(bno);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+    System.out.println("##############");
+    System.out.println("번호 : " + board.getBno());
+    System.out.println("제목 : "+board.getBtitle());
+    System.out.println("내용 : "+board.getBcontent());
+    System.out.println("작성자 : "+ board.getBwriter());
+    System.out.println("날짜 : "+board.getBdate());
+    System.out.println("##############");
+    return board;
+  }
+
   //list 메서드
   void list() {
     boolean exit = false;
@@ -46,7 +59,13 @@ public class BoardExample extends BoardDBIO {
       printBoards(boards);
       super.stclose();
       //메인 메뉴 출력 및 실행
-      int menu = boardMenu.mainMenu();
+      int menu = 0;
+
+      try {
+        menu = boardMenu.mainMenu();
+      } catch (Exception e) {
+        System.out.println("1, 2, 3, 4 숫자만 입력해주세요.");
+      }
 
       switch (menu) {
         //Create 실행
@@ -69,9 +88,12 @@ public class BoardExample extends BoardDBIO {
               }
             }
           } else if (subMenu == 2){
-
+            boolean result = deleteBoard(bno);
+            if (!result) {
+              System.out.println("게시글 삭제가 실패했습니다.");
+            }
           } else if (subMenu == 3){
-
+            continue;
           }
           break;
         case 3:
@@ -84,19 +106,4 @@ public class BoardExample extends BoardDBIO {
     }
   }
 
-  private Board selectOneBoard(int bno){
-    Board board = super.selectBoard(bno);
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-    System.out.println("##############");
-    System.out.println("번호 : " + board.getBno());
-    System.out.println("제목 : "+board.getBtitle());
-    System.out.println("내용 : "+board.getBcontent());
-    System.out.println("작성자 : "+ board.getBwriter());
-    System.out.println("날짜 : "+board.getBdate());
-    System.out.println("##############");
-
-    System.out.println("date format 없이 출력하면~ ");
-    System.out.println(board.getBdate());
-    return board;
-  }
 }

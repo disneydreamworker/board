@@ -16,7 +16,7 @@ public class BoardMenu {
     System.out.println("---------------------------------------------------");
   }
 
-  public int mainMenu(){
+  public int mainMenu() {
     System.out.println("---------------------------------------------------");
     System.out.println("메인 메뉴 : 1. Create | 2. Read | 3. Clear | 4. Exit");
     System.out.print("메뉴 선택 : ");
@@ -25,7 +25,7 @@ public class BoardMenu {
       String input = br.readLine();
       menu = Integer.parseInt(input.trim());
       if (menu < 1 || menu > 4){
-        throw new IOException("1, 2, 3, 4 숫자만 입력해주세요.");
+        throw new IOException();
       }
     } catch (IOException | NumberFormatException e) {
       System.err.println(e.getMessage());
@@ -44,10 +44,8 @@ public class BoardMenu {
       System.out.println("[새 게시물 입력]");
       System.out.print("제목 : ");
       btitle = br.readLine();
-      System.out.println();
       System.out.print("내용 : ");
       bcontent = br.readLine();
-      System.out.println();
       System.out.print("작성자 : ");
       bwriter = br.readLine();
       bdate = new Date();
@@ -112,12 +110,11 @@ public class BoardMenu {
     System.out.print("제목 : ");
     try {
       board.setBtitle(br.readLine());
-      System.out.println("내용 : ");
+      System.out.print("내용 : ");
       board.setBcontent(br.readLine());
-      System.out.println("작성자 : ");
+      System.out.print("작성자 : ");
       board.setBwriter(br.readLine());
       board.setBdate(new Date());
-      System.out.println("---------------------------------------------------");
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

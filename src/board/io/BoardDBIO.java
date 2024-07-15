@@ -10,8 +10,10 @@ import lib.ObjectDBIO;
 public class BoardDBIO extends ObjectDBIO implements BoardIO {
 
   @Override
-  public boolean deleteBoard() {
-    return false;
+  public boolean deleteBoard(int bno) {
+    String query = "delete from boards where no =" + bno;
+    boolean result = super.execute(query);
+    return result;
   }
 
   @Override
@@ -33,8 +35,6 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
     String query =
         "INSERT INTO boards (title, content, writer, date) VALUES ('" + title + "', '" + content
             + "', '" + writer + "', '" + sqlDate + "')";
-
-    System.out.println(query);
     return super.execute(query);
   }
 
@@ -62,6 +62,7 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
       }
     } catch (SQLException e) {
       System.err.println(e.getMessage());
+      System.out.println("해당하는 게시물이 존재하지 않습니다.");
     }
     return board;
   }
