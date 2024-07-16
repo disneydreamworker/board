@@ -64,13 +64,13 @@ public abstract class ObjectDBIO {
     }
   }
 
-  protected ResultSet execute(String query, ResultSet rs) {
+  protected ResultSet execute(String query, ResultSet rs) throws SQLException, NullPointerException {
     try {
       //connection db
       open();
       obj = connection.createStatement();
       rs = obj.executeQuery(query);
-    } catch (SQLException e) {
+    } catch (SQLException | NullPointerException e) {
       System.err.println(e.getMessage());
       System.out.println("존재하지 않는 게시물입니다.");
     }
@@ -78,7 +78,7 @@ public abstract class ObjectDBIO {
   }
 
   //executeUpdate : insert, update, delete 쿼리문
-  protected boolean execute(String query) {
+  protected boolean execute(String query) throws SQLException {
     boolean result = false;
     try {
       open();

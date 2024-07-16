@@ -8,13 +8,15 @@ public class BoardExample extends BoardDBIO {
 
   //싱글톤 패턴
   private static final BoardExample BOARD_EXAMPLE = new BoardExample();
-  private BoardExample(){}
+  //BoardMenu
+  BoardMenu boardMenu = new BoardMenu();
+
+  private BoardExample() {
+  }
+
   public static BoardExample getBoardExample() {
     return BOARD_EXAMPLE;
   }
-
-  //BoardMenu
-  BoardMenu boardMenu = new BoardMenu();
 
   private void printBoards(ArrayList<Board> boards) {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
@@ -32,15 +34,15 @@ public class BoardExample extends BoardDBIO {
     }
   }
 
-  private Board selectOneBoard(int bno){
+  private Board selectOneBoard(int bno) {
     Board board = super.selectBoard(bno);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
     System.out.println("##############");
     System.out.println("번호 : " + board.getBno());
-    System.out.println("제목 : "+board.getBtitle());
-    System.out.println("내용 : "+board.getBcontent());
-    System.out.println("작성자 : "+ board.getBwriter());
-    System.out.println("날짜 : "+board.getBdate());
+    System.out.println("제목 : " + board.getBtitle());
+    System.out.println("내용 : " + board.getBcontent());
+    System.out.println("작성자 : " + board.getBwriter());
+    System.out.println("날짜 : " + board.getBdate());
     System.out.println("##############");
     return board;
   }
@@ -72,7 +74,7 @@ public class BoardExample extends BoardDBIO {
         case 1:
           createBoard();
           break;
-          //Read 실행
+        //Read 실행
         case 2:
           //bno과 일치하는 ResultSet 한 줄 만 출력
           int bno = boardMenu.readMenu();
@@ -87,12 +89,12 @@ public class BoardExample extends BoardDBIO {
                 System.out.println("게시글 수정이 실패했습니다.");
               }
             }
-          } else if (subMenu == 2){
+          } else if (subMenu == 2) {
             boolean result = deleteBoard(bno);
             if (!result) {
               System.out.println("게시글 삭제가 실패했습니다.");
             }
-          } else if (subMenu == 3){
+          } else if (subMenu == 3) {
             continue;
           }
           break;
@@ -101,9 +103,11 @@ public class BoardExample extends BoardDBIO {
           int ok = boardMenu.okayMenu();
           dropBoard(ok);
           break;
-        case 4: exit = true; break;
+        case 4:
+          exit = true;
+          close();
+          break;
       }
     }
   }
-
 }
