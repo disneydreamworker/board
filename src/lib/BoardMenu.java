@@ -6,6 +6,7 @@ import board.vo.Board;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class BoardMenu {
   public void printBoardsMenu() {
     System.out.println("[게시글 목록]");
     System.out.println("---------------------------------------------------");
-    System.out.println("no\t\twriter\t\tdate\t\ttitle");
+    System.out.printf("%-5s %-10s  %-15s %-20s\n","no", "writer", "date", "title");
     System.out.println("---------------------------------------------------");
   }
 
@@ -36,11 +37,11 @@ public class BoardMenu {
     ArrayList<Board> boards = impl.getBoardList();
     Optional<ArrayList<Board>> optional = Optional.ofNullable(boards);
     optional.ifPresentOrElse(boardsArray -> boardsArray.forEach(board -> {
-      System.out.print(board.getBno() + "\t");
-      System.out.print(board.getBwriter() + "\t\t");
-      System.out.print(dateFormat.format(board.getBdate()) + "\t\t");
-      System.out.print(board.getBtitle() + "\n");
-
+      System.out.printf("%-5s %-10s%-15s %-20s\n",
+          board.getBno(),
+          board.getBwriter(),
+          dateFormat.format(board.getBdate()),
+          board.getBtitle() );
     }), () -> System.out.println("게시글이 존재하지 않습니다."));
   }
 
@@ -203,12 +204,11 @@ public class BoardMenu {
       String input = br.readLine();
       if (exception.isValidNumber(input) && Integer.parseInt(input) == 1) {
         return 1;
-      } else if (exception.isValidNumber(input) || Integer.parseInt(input) == 2) {
-        return 2;
       }
     } catch (IOException | NumberFormatException e) {
       System.out.println(e.getMessage());
     }
     return -1;
   }
+
 }
