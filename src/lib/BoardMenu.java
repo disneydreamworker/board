@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -122,16 +123,17 @@ public class BoardMenu {
 
   //readBoard : 2.Read 메뉴 -> 사용자 입력 primary key로 boards DB의 해당 레코드 데이터 파싱 후 출력
   public Board readBoard(int bno) {
-    Board board = impl.selectBoard(bno);
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-    System.out.println("##############");
-    System.out.println("번호 : " + board.getBno());
-    System.out.println("제목 : " + board.getBtitle());
-    System.out.println("내용 : " + board.getBcontent());
-    System.out.println("작성자 : " + board.getBwriter());
-    System.out.println("날짜 : " + board.getBdate());
-    System.out.println("##############");
-    return board;
+    Optional<Board> optional = Optional.ofNullable(impl.selectBoard(bno));
+    return optional.map(board -> {
+      System.out.println("##############");
+      System.out.println("번호 : " + board.getBno());
+      System.out.println("제목 : " + board.getBtitle());
+      System.out.println("내용 : " + board.getBcontent());
+      System.out.println("작성자 : " + board.getBwriter());
+      System.out.println("날짜 : " + board.getBdate());
+      System.out.println("##############");
+      return board;
+    }).orElseThrow(() -> new NoSuchElementException("게시글이 존재하지 않습니다."));
   }
 
 
@@ -145,20 +147,19 @@ public class BoardMenu {
       if (exception.isValidSubNumber(input)) {
         int sub = Integer.parseInt(input);
         switch (sub) {
-          case 1:
+          case 1 -> {
             Board boardUpdate = updateBoard(board);
             if (okayMenu() == 1) {
               impl.updateBoard(boardUpdate);
             }
-            break;
-          case 2:
+          }
+          case 2 -> {
             System.out.println("[게시물 삭제]");
             if (okayMenu() == 1) {
               impl.deleteBoard(board.getBno());
             }
-            break;
-          case 3:
-            break;
+          }
+          case 3 -> {}
         }
       }
     } catch (IOException | NumberFormatException e) {
@@ -166,17 +167,7 @@ public class BoardMenu {
     }
   }
 
-
-  //dropBoard : 3.Clear -> 게시물 전체 삭제
-  public void dropBoard() {
-    System.out.println("[게시물 전체 삭제]");
-    if (okayMenu() == 1) {
-      impl.dropBoard();
-    }
-  }
-
-
-  //updateBoard : 2.Read 메뉴의 보조메뉴인 수정 메뉴
+  //updateBoard : 2.Read 메뉴의 보조 메뉴인 수정 메뉴
   public Board updateBoard(Board board) {
     try {
       System.out.println("[수정 내용 입력]");
@@ -194,6 +185,15 @@ public class BoardMenu {
   }
 
 
+  //dropBoard : 3.Clear -> 게시물 전체 삭제
+  public void dropBoard() {
+    System.out.println("[게시물 전체 삭제]");
+    if (okayMenu() == 1) {
+      impl.dropBoard();
+    }
+  }
+
+
   //okayMenu : 보조 메뉴 ok cancel
   public int okayMenu() {
     try {
@@ -207,7 +207,7 @@ public class BoardMenu {
         return 2;
       }
     } catch (IOException | NumberFormatException e) {
-      System.err.println(e.getMessage());
+      System.out.println(e.getMessage());
     }
     return -1;
   }

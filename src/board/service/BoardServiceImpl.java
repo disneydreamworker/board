@@ -112,7 +112,7 @@ public class BoardServiceImpl implements BoardService {
   }
 
 
-  //************************************************Delete******************************************************
+  //************************************************Delete*****************************************
   @Override
   public void deleteBoard(int bno) {
     String query = "delete from boards where no =" + bno;

@@ -24,23 +24,19 @@ public class BoardMain {
         menu.printBoards();
         int num = menu.showMainMenu();
         switch (num) {
-          case 1:
+          case 1 -> {
             Board createBoard = menu.createBoardMenu();
             menu.createBoard(createBoard);
-            break;
-          case 2:
+          }
+          case 2 -> {
             int key = menu.getBoardKey();
             if (key != -1) {
               Board readBoard = menu.readBoard(key);
               menu.showSubMenu(readBoard);
             }
-            break;
-          case 3:
-            menu.dropBoard();
-            break;
-          case 4:
-            loop = true;
-            break;
+          }
+          case 3 -> menu.dropBoard();
+          case 4 -> loop = true;
         }
       }
     } catch (Exception e) {
