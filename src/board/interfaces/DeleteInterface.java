@@ -1,5 +1,6 @@
-package board.io;
+package board.interfaces;
 
 public interface DeleteInterface extends SelectInterface{
-  public boolean deleteBoard(int bno);
+
+  void deleteBoard(int bno);
 }

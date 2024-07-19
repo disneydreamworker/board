@@ -2,93 +2,37 @@ package lib;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-
+//Exception 내부에서 바로 처리
 public abstract class ObjectDBIO {
-
   private Connection connection = null;
-  private Statement obj = null;
-  private PreparedStatement psmt = null;
-
   private final String db_url = "jdbc:mysql://localhost:3306/employees";
   private final String db_id = "root";
   private final String db_pwd = "0000";
 
-  //Connection
-  private boolean open() {
+  //************************************************DB Connection******************************************************
+  public Connection open() {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
       connection = DriverManager.getConnection(db_url, db_id, db_pwd);
-      //System.out.println(connection);
-      return true;
+      System.out.println("DB 커넥션 성공 " + connection);
+      return connection;
+
     } catch (ClassNotFoundException e) {
-      System.err.println(e.getMessage());
-      return false;
+      System.out.println("드라이버 클래스를 찾지 못했습니다." + e.getMessage());
     } catch (SQLException e) {
-      System.err.println(e.getMessage());
-      return false;
+      System.out.println("DB 커넥션 실패 " + e.getMessage());
     }
+    return connection;
   }
 
-  protected boolean close() {
+  public void close() {
     try {
       connection.close();
-      return true;
     } catch (SQLException e) {
-      System.err.println(e.getMessage());
-      return false;
+      System.out.println("DB 커넥션 종료 실패 " + e.getMessage());
     }
   }
 
-  protected boolean stclose() {
-    try {
-      obj.close();
-      return true;
-    } catch (SQLException e) {
-      System.err.println(e.getMessage());
-      return false;
-    }
-  }
-
-  protected boolean psmtclose() {
-    try {
-      psmt.close();
-      return true;
-    } catch (SQLException e) {
-      System.err.println(e.getMessage());
-      return false;
-    }
-  }
-
-  protected ResultSet execute(String query, ResultSet rs) throws SQLException, NullPointerException {
-    try {
-      //connection db
-      open();
-      obj = connection.createStatement();
-      rs = obj.executeQuery(query);
-    } catch (SQLException | NullPointerException e) {
-      System.err.println(e.getMessage());
-      System.out.println("존재하지 않는 게시물입니다.");
-    }
-    return rs;
-  }
-
-  //executeUpdate : insert, update, delete 쿼리문
-  protected boolean execute(String query) throws SQLException {
-    boolean result = false;
-    try {
-      open();
-      psmt = connection.prepareStatement(query);
-      psmt.execute();
-      result = true;
-      return result;
-    } catch (SQLException e) {
-      System.err.println(e.getMessage());
-    }
-    return result;
-  }
 }

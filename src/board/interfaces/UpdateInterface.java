@@ -1,7 +1,8 @@
-package board.io;
+package board.interfaces;
 
 import board.vo.Board;
 
 public interface UpdateInterface extends SelectInterface{
-  public boolean updateBoard(Board board);
+
+  void updateBoard(Board board);
 }

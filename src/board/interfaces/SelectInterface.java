@@ -1,8 +1,8 @@
-package board.io;
+package board.interfaces;
 
 import board.vo.Board;
-import java.util.ArrayList;
 
 public interface SelectInterface extends OutputInterface{
-  public Board selectBoard(int bno);
+
+  Board selectBoard(int bno);
 }

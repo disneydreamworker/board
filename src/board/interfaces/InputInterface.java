@@ -1,7 +1,8 @@
-package board.io;
+package board.interfaces;
 
 import board.vo.Board;
 
 public interface InputInterface extends OutputInterface {
-  public boolean insertBoard(Board board);
+
+  void insertBoard(Board board);
 }

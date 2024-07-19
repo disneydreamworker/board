@@ -1,6 +1,7 @@
-package board.io;
+package board.interfaces;
 
 //Clear menu
 public interface DropInterface extends OutputInterface{
-  public boolean dropBoard(int ok);
+
+  void dropBoard(int ok);
 }
