@@ -10,7 +10,7 @@ import lib.ExecutionDBIO;
 
 public class BoardServiceImpl implements BoardService {
 
-  ExecutionDBIO exception = new ExecutionDBIO();
+  ExecutionDBIO exc = new ExecutionDBIO();
 
   //******************************************Create************************************************
   @Override
@@ -28,7 +28,7 @@ public class BoardServiceImpl implements BoardService {
                 + content + "', '"
                 + writer + "', '"
                 + sqlDate + "')";
-        exception.exc(query);
+        exc.exc(query);
         System.out.println("게시글 생성이 성공했습니다.");
       } else {
         throw new NoSuchElementException("createBoard 에러 발생");
@@ -46,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
     ResultSet rs = null;
     ArrayList<Board> boardlist = new ArrayList<>();
     try {
-      rs = exception.excRead(query);
+      rs = exc.excRead(query);
       while (rs.next()) {
         int bno = rs.getInt("no");
         String btitle = rs.getString("title");
@@ -65,23 +65,26 @@ public class BoardServiceImpl implements BoardService {
 
   @Override
   public Board selectBoard(int bno) {
+    Board board = null;
+    String query = "select * from boards where no =" + bno;
+    ResultSet rs;
     try {
-      Board board = null;
-      String query = "select * from boards where no =" + bno;
-      ResultSet rs = exception.excRead(query);
+      rs = exc.excRead(query);
       if (rs != null) {
-        board = new Board(rs.getInt(1),
-            rs.getString(2),
-            rs.getString(3),
-            rs.getString(4),
-            rs.getDate(5));
+        while(rs.next()) {
+          board = new Board(rs.getInt(1),
+              rs.getString(2),
+              rs.getString(3),
+              rs.getString(4),
+              rs.getDate(5));
+        }
+        return board;
       }
-      return board;
     } catch (SQLException e) {
       System.out.println("게시글 조회가 실패했습니다. 다시 시도해주세요.");
       System.out.println(e.getMessage());
     }
-    return null;
+    return board;
   }
 
 
@@ -100,7 +103,7 @@ public class BoardServiceImpl implements BoardService {
         + "', date = '" + sqlDate
         + "' WHERE no = " + board.getBno();
     try {
-      exception.exc(query);
+      exc.exc(query);
       System.out.println("게시글 수정이 성공했습니다.");
     } catch (SQLException e) {
       System.out.println("게시글 수정이 실패했습니다. 다시 시도해주세요.");
@@ -114,7 +117,7 @@ public class BoardServiceImpl implements BoardService {
   public void deleteBoard(int bno) {
     String query = "delete from boards where no =" + bno;
     try {
-      exception.exc(query);
+      exc.exc(query);
       System.out.println("게시글 삭제가 성공했습니다.");
     } catch (SQLException e) {
       System.out.println("게시글 삭제가 실패했습니다. 다시 시도해주세요.");
@@ -127,7 +130,7 @@ public class BoardServiceImpl implements BoardService {
   public void dropBoard() {
     try {
       String query = "TRUNCATE TABLE boards";
-      exception.exc(query);
+      exc.exc(query);
       System.out.println("게시글 전체 삭제가 성공했습니다.");
     } catch (SQLException e) {
       System.out.println("게시글 전체 삭제가 실패했습니다. 다시 시도해주세요.");

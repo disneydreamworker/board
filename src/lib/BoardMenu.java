@@ -61,7 +61,7 @@ public class BoardMenu {
     } catch (NumberFormatException e) {
       System.out.println(e.getMessage());
     }
-    return 4;
+    return -1;
   }
 
 
@@ -107,7 +107,9 @@ public class BoardMenu {
       if (exception.isValidKey(input)) {
         key = Integer.parseInt(input);
         //입력한 숫자가 DB의 no 필드에 존재하는지 확인
-        if (impl.selectBoard(key) != null) {
+        if (impl.selectBoard(key) == null) {
+          System.out.println("게시글이 존재하지 않습니다.");
+        } else {
           return key;
         }
       }
