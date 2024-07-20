@@ -2,7 +2,7 @@ package board.interfaces;
 
 import board.vo.Board;
 
-public interface UpdateInterface extends SelectInterface{
+public interface UpdateInterface {
 
   void updateBoard(Board board);
 }

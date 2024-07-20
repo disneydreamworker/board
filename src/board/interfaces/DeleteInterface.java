@@ -1,6 +1,6 @@
 package board.interfaces;
 
-public interface DeleteInterface extends SelectInterface{
+public interface DeleteInterface extends DropInterface{
 
   void deleteBoard(int bno);
 }

@@ -1,5 +1,5 @@
 package board.interfaces;
 
-public interface BoardIO extends DeleteInterface, DropInterface, InputInterface, UpdateInterface{
+public interface BoardIO extends DeleteInterface, InputInterface, UpdateInterface, SelectInterface{
 
 }
