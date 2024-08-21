@@ -1,14 +1,13 @@
 package board;
 
-
-import board.service.BoardManager;
 import board.vo.Board;
 import lib.BoardMenu;
+
 
 public class BoardMain {
 
   //*******************************************메인 메서드 선언부*******************************************************
-  public static void main(String[] args) {
+  public static void main(String[] args) throws ClassNotFoundException {
     BoardMain boardMain = new BoardMain();
     boardMain.list();
   }

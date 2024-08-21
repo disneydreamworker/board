@@ -31,6 +31,7 @@ public class ExecutionDBIO extends ObjectDBIO {
   //************************************************exc : insert(), update(), delete() 쿼리문************************************
   public void exc(String query) throws SQLException {
     try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
       connection = open();
       if (connection != null) {
         psmt = connection.prepareStatement(query);
@@ -40,6 +41,8 @@ public class ExecutionDBIO extends ObjectDBIO {
       }
     } catch (SQLException e) {
       throw new SQLException("DB에서 쿼리를 수행하던 중 문제가 발생했습니다.");
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(e);
     }
   }
 
